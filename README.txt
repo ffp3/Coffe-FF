@@ -10,7 +10,14 @@ You can find out what version you have from Start -> Control Pannel -> System ->
 
 Where can I get the source code?
 
-The source code is in the svn server for this project. 1. download tortoise svn (http://tortoisesvn.tigris.org/) or another SVN software. 2. install the software 3. restart computer 4. make a new folder anyware you want 5. right click on the folder and click on "SVN Checkout..." 6. for URL of repository put "https://svn.code.sf.net/p/coffee-sc/code/" 7. Press OK.
+The source code is in the svn server for this project. 
+1. Download tortoise svn (http://tortoisesvn.tigris.org/) or another SVN software. 
+2. Install the software 
+3. Restart computer 
+4. Make a new folder anyware you want 
+5. Right click on the folder and click on "SVN Checkout..." 
+6. For URL of repository put Steven Cole respiratory "https://svn.code.sf.net/p/coffee-sc/code/" or FireFly respiratory "https://github.com/ffp3/Coffe-FF"
+7. Press OK.
 
 It wont work I get some error message I am on XP?
 
@@ -22,7 +29,11 @@ You probably have x64 (64 bit) windows vista or windows 7, please visit the file
 
 and download the correct release.
 
-***** 2.0.0 ****** (Updated by FireFly) Done: Updated to .Net 4.5 Added option to simulate key press. Added option to remove sleep block after X minutes.
+***** 2.0.0 ****** (Updated by FireFly) 
+Done: 
+ Updated to .Net 4.5 
+ Added option to simulate key press. 
+ Added option to remove sleep block after X minutes.
 
 ***** 1.0.4 ****** (Everything bellow is done by Steven Cole)
 
