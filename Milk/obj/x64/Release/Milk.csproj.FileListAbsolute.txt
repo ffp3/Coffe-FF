@@ -1,0 +1,10 @@
+C:\BRTV\Coffee\Coffe-FF\Milk\bin\x64\Release\Milk.exe.config
+C:\BRTV\Coffee\Coffe-FF\Milk\bin\x64\Release\Milk.exe.manifest
+C:\BRTV\Coffee\Coffe-FF\Milk\bin\x64\Release\Milk.application
+C:\BRTV\Coffee\Coffe-FF\Milk\bin\x64\Release\Milk.exe
+C:\BRTV\Coffee\Coffe-FF\Milk\obj\x64\Release\Milk.mfMilk.resources
+C:\BRTV\Coffee\Coffe-FF\Milk\obj\x64\Release\Milk.Properties.Resources.resources
+C:\BRTV\Coffee\Coffe-FF\Milk\obj\x64\Release\Milk.csproj.GenerateResource.Cache
+C:\BRTV\Coffee\Coffe-FF\Milk\obj\x64\Release\Milk.exe.manifest
+C:\BRTV\Coffee\Coffe-FF\Milk\obj\x64\Release\Milk.application
+C:\BRTV\Coffee\Coffe-FF\Milk\obj\x64\Release\Milk.exe

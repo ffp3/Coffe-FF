@@ -1,0 +1,12 @@
+C:\BRTV\Coffee\Coffe-FF\Sugar\bin\x64\Release\Sugar.exe.config
+C:\BRTV\Coffee\Coffe-FF\Sugar\bin\x64\Release\Sugar.exe.manifest
+C:\BRTV\Coffee\Coffe-FF\Sugar\bin\x64\Release\Sugar.application
+C:\BRTV\Coffee\Coffe-FF\Sugar\bin\x64\Release\Sugar.exe
+C:\BRTV\Coffee\Coffe-FF\Sugar\bin\x64\Release\Sugar.pdb
+C:\BRTV\Coffee\Coffe-FF\Sugar\obj\x64\Release\Sugar.Form1.resources
+C:\BRTV\Coffee\Coffe-FF\Sugar\obj\x64\Release\Sugar.Properties.Resources.resources
+C:\BRTV\Coffee\Coffe-FF\Sugar\obj\x64\Release\Sugar.csproj.GenerateResource.Cache
+C:\BRTV\Coffee\Coffe-FF\Sugar\obj\x64\Release\Sugar.exe.manifest
+C:\BRTV\Coffee\Coffe-FF\Sugar\obj\x64\Release\Sugar.application
+C:\BRTV\Coffee\Coffe-FF\Sugar\obj\x64\Release\Sugar.exe
+C:\BRTV\Coffee\Coffe-FF\Sugar\obj\x64\Release\Sugar.pdb

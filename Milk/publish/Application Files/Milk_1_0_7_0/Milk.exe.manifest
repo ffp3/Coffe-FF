@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="Milk.exe" version="1.0.7.0" publicKeyToken="bc8169fb2f4c003a" language="neutral" processorArchitecture="x86" type="win32" />
+  <description asmv2:iconFile="diagram-55.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="Milk" version="1.0.7.0" language="neutral" processorArchitecture="x86" />
+    <commandLine file="Milk.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Milk.exe" size="210872">
+      <assemblyIdentity name="Milk" version="1.0.7.0" language="neutral" processorArchitecture="x86" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>qSZDLiSUpYWHu5hik7HTXWvl816O15OtjtWHGhSX594=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="diagram-55.ico" size="99678">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ObdmOnVvZxSKNWajZ8vqeBZp9+sMlgvh2zQ7UFkrBo4=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Milk.exe.config" size="161">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>+K0Xw31ERSGzkFzL116my249J2OxbrVrLhqkJ0Fz5hQ=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=CODE1\usd22614" issuerKeyHash="73c47aca78154563e852d8c4e70520308a7a88ee" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>pF0TvejAkqT7dY1Nfpw7EsGWJZJeNvOsC4YmgbGFd/U=</DigestValue></Reference></SignedInfo><SignatureValue>i2hMw4NZZnH4nOgorMHWJMjfxlSuoCmFhAezYaSjvmH0a9jjdiGTqIshUzLm/ZqC0aWTHP1qHk/gMl5wBzsEnsdT6/2HGdJs/BixdUph53o0Uvl2VSPBFl3a3SQlfuBMiK8Yj0dXHBjbHeh8z3q8T48eOGhHLM54orKTu/oVfEE=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>yTG+6y07aiCK16zc6ePqhv5MT5dv4VpCIxOLbrohypTNN4+trPFcu9218Lmg3QOpv86yTxqGegdOyGhLUESDTZ/NCWM6bAcnfO0QKI8z/NT7BIWUMO+bPwpcWzQ0p3mRZW+PJjfjUjKZonYWQbRBUHwJIXkz7ij1F73RztsXjT8=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="f57785b18126860bacf3365e922596c1123b9c7e4d8d75fba492c0e8bd135da4" Description="" Url=""><as:assemblyIdentity name="Milk.exe" version="1.0.7.0" publicKeyToken="bc8169fb2f4c003a" language="neutral" processorArchitecture="x86" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=CODE1\usd22614</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>ISyBIE7lhiEaNcomJSMH1qOYEbcxerDjlRYki0CKJto=</DigestValue></Reference></SignedInfo><SignatureValue>tQhh9YULIZR9vQAMrt+H0jtz4T0krIVpDwPwHxz3PnTIqR/s1cG5wZea4K4+onIko46mNfAEnfxNZ7dbXL09aNamaL3tsOzo4hc4zs6sriK/m8TmfljgAD9xdEp0O7sk9eFbP39VkiEYi63/dkwODK7FN05UCEeuVVnUATTC0XI=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>yTG+6y07aiCK16zc6ePqhv5MT5dv4VpCIxOLbrohypTNN4+trPFcu9218Lmg3QOpv86yTxqGegdOyGhLUESDTZ/NCWM6bAcnfO0QKI8z/NT7BIWUMO+bPwpcWzQ0p3mRZW+PJjfjUjKZonYWQbRBUHwJIXkz7ij1F73RztsXjT8=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB0TCCATqgAwIBAgIQSwSGdSVJ/aZIIELbrAHYSDANBgkqhkiG9w0BAQsFADAnMSUwIwYDVQQDHhwAQwBPAEQARQAxAFwAdQBzAGQAMgAyADYAMQA0MB4XDTE1MDYwMjE3MzkwOFoXDTE2MDYwMTIzMzkwOFowJzElMCMGA1UEAx4cAEMATwBEAEUAMQBcAHUAcwBkADIAMgA2ADEANDCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAyTG+6y07aiCK16zc6ePqhv5MT5dv4VpCIxOLbrohypTNN4+trPFcu9218Lmg3QOpv86yTxqGegdOyGhLUESDTZ/NCWM6bAcnfO0QKI8z/NT7BIWUMO+bPwpcWzQ0p3mRZW+PJjfjUjKZonYWQbRBUHwJIXkz7ij1F73RztsXjT8CAwEAATANBgkqhkiG9w0BAQsFAAOBgQCYUTJ9Hl5IJ7Yv+YGmta4QGDsz2EeyZWGRPxcCX+aFWf/HX/+CNUOXG5cw5yJqH1owPhPHz+rygAVRfLUWMRG1E/KqQrhwQupLeyx5W+AR6dHDgiNFtcqwuGmmgnItquw930RxgnvlIlXARcqnYn1A6rIqDNnnQRSkaO5NinqBrw==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

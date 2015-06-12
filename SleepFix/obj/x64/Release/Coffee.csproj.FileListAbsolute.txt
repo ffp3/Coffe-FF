@@ -1,0 +1,13 @@
+C:\BRTV\Coffee\Coffe-FF\SleepFix\bin\x64\Release\Coffee.exe.config
+C:\BRTV\Coffee\Coffe-FF\SleepFix\bin\x64\Release\Coffee.exe.manifest
+C:\BRTV\Coffee\Coffe-FF\SleepFix\bin\x64\Release\Coffee.application
+C:\BRTV\Coffee\Coffe-FF\SleepFix\bin\x64\Release\Coffee.exe
+C:\BRTV\Coffee\Coffe-FF\SleepFix\bin\x64\Release\Coffee.pdb
+C:\BRTV\Coffee\Coffe-FF\SleepFix\obj\x64\Release\SleepFix.Form1.resources
+C:\BRTV\Coffee\Coffe-FF\SleepFix\obj\x64\Release\Coffee.Properties.Resources.resources
+C:\BRTV\Coffee\Coffe-FF\SleepFix\obj\x64\Release\Coffee.csproj.GenerateResource.Cache
+C:\BRTV\Coffee\Coffe-FF\SleepFix\obj\x64\Release\Coffee.TrustInfo.xml
+C:\BRTV\Coffee\Coffe-FF\SleepFix\obj\x64\Release\Coffee.exe.manifest
+C:\BRTV\Coffee\Coffe-FF\SleepFix\obj\x64\Release\Coffee.application
+C:\BRTV\Coffee\Coffe-FF\SleepFix\obj\x64\Release\Coffee.exe
+C:\BRTV\Coffee\Coffe-FF\SleepFix\obj\x64\Release\Coffee.pdb
