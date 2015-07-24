@@ -32,7 +32,7 @@ namespace Sugar
 
                 // The value doesn't exist, the application is not set to run at startup
 
-                rkApp.SetValue("Coffee", Application.StartupPath + @"\Coffee.exe /hide");
+                rkApp.SetValue("Coffee", Application.StartupPath + @"\Coffee_FF.exe /hide");
                 label1.Text = "Coffee WILL start with windows";
 
             }

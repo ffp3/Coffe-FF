@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Coffee.Properties {
+namespace Coffee_FF.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -92,6 +92,18 @@ namespace Coffee.Properties {
             }
             set {
                 this["EnDisKeyPress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DisDisplayStandby {
+            get {
+                return ((bool)(this["DisDisplayStandby"]));
+            }
+            set {
+                this["DisDisplayStandby"] = value;
             }
         }
     }

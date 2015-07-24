@@ -46,13 +46,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5CA1533C98B74C769533BAF86766EDBA"
+        "OwnerKey" = "8:_AE6E69CA8B7B4022B37021C280DB0EA4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AE6E69CA8B7B4022B37021C280DB0EA4"
+        "OwnerKey" = "8:_5CA1533C98B74C769533BAF86766EDBA"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -208,7 +208,7 @@
                 {
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_4786A979E656442B99E6DEBCFCEA660C"
                     {
-                    "Name" = "8:Coffee"
+                    "Name" = "8:Coffee_FF"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
@@ -248,7 +248,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Coffee"
         "ProductCode" = "8:{B3F75D6B-727E-49CE-9849-D2D52B507640}"
-        "PackageCode" = "8:{CB60E46D-56FF-49ED-9535-802CF8AB3B13}"
+        "PackageCode" = "8:{7B2A4B4D-7203-4DC8-A562-F43151CA4D35}"
         "UpgradeCode" = "8:{5CAF36F2-FDF2-48AA-9D49-4FB08A40D39F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -370,7 +370,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_2250740CEC2D454ABB2D30FC30274973"
             {
-            "Name" = "8:Coffee"
+            "Name" = "8:Coffee_FF"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -858,7 +858,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D1CEDF4C35734BC0A7ECF423818E90A3"
             {
-            "SourcePath" = "8:..\\SleepFix\\obj\\x86\\Release\\Coffee.exe"
+            "SourcePath" = "8:..\\SleepFix\\obj\\x86\\Release\\Coffee_FF.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_8B9E74853B64471C9ADB4873F5640794"

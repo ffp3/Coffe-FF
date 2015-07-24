@@ -16,13 +16,13 @@ using System.Threading;
 using System.Reflection;
 
 
+
 namespace SleepFix
 {
-
-
-
-    public partial class Form1 : Form
+        public partial class Form1 : Form
     {
+
+
         public Form1()
         {
             InitializeComponent();
@@ -202,6 +202,10 @@ namespace SleepFix
                     // Set a system request to prevent automatic sleep
                     //
                     PowerSetRequest(DownloadPowerRequest, PowerRequestType.PowerRequestSystemRequired);
+                    if (checkBox2.Checked)
+                    {
+                        PowerSetRequest(ProcessPowerRequest, PowerRequestType.PowerRequestDisplayRequired);
+                    }
                     DownloadPrevented = true;
                     // 
                     // Download the file...
@@ -233,6 +237,10 @@ namespace SleepFix
                     // Set a system request to prevent automatic sleep
                     //
                     PowerSetRequest(UploadPowerRequest, PowerRequestType.PowerRequestSystemRequired);
+                    if (checkBox2.Checked)
+                    {
+                        PowerSetRequest(ProcessPowerRequest, PowerRequestType.PowerRequestDisplayRequired);
+                    }
                     UploadPrevented = true;
                     // 
                     // Download the file...
@@ -265,6 +273,10 @@ namespace SleepFix
                     // Set a system request to prevent automatic sleep
                     //
                     PowerSetRequest(ProcessPowerRequest, PowerRequestType.PowerRequestSystemRequired);
+                    if (checkBox2.Checked)
+                    {
+                        PowerSetRequest(ProcessPowerRequest, PowerRequestType.PowerRequestDisplayRequired);
+                    }
                     ProcessPrevented = true;
                     // 
                     // Download the file...
@@ -286,6 +298,7 @@ namespace SleepFix
                     // Clear the request
                     //
                     PowerClearRequest(DownloadPowerRequest, PowerRequestType.PowerRequestSystemRequired);
+                    PowerClearRequest(DownloadPowerRequest, PowerRequestType.PowerRequestDisplayRequired);
                     DownloadPrevented = false;
 
                 }
@@ -299,6 +312,7 @@ namespace SleepFix
                     // Clear the request
                     //
                     PowerClearRequest(UploadPowerRequest, PowerRequestType.PowerRequestSystemRequired);
+                    PowerClearRequest(UploadPowerRequest, PowerRequestType.PowerRequestDisplayRequired);
                     UploadPrevented = false;
 
                 }
@@ -313,6 +327,7 @@ namespace SleepFix
                     // Clear the request
                     //
                     PowerClearRequest(ProcessPowerRequest, PowerRequestType.PowerRequestSystemRequired);
+                    PowerClearRequest(ProcessPowerRequest, PowerRequestType.PowerRequestDisplayRequired);
                     ProcessPrevented = false;
 
                 }
@@ -327,12 +342,29 @@ namespace SleepFix
             Close();
         }
 
+         // preventing program from exit
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!menuexit)
+
+
+            if (!menuexit && e.CloseReason != CloseReason.WindowsShutDown) // If system shuting down will close and save
             {
+               
                 notifyIcon1.Visible = true;  //dont actualy exit the program
                 this.Hide();
+
+
+                this.WindowState = FormWindowState.Minimized;
+
+                notifyIcon1.BalloonTipIcon = ToolTipIcon.Info;
+                notifyIcon1.BalloonTipTitle = "Attention";
+                notifyIcon1.BalloonTipText = "Coffee_FF minimized to system tray." +
+                            Environment.NewLine +
+                            "Right-click on the icon for more options.";
+
+                notifyIcon1.ShowBalloonTip(5000);
+
+
                 e.Cancel = true;
             }
             else
@@ -340,14 +372,16 @@ namespace SleepFix
 
                 try
                 {
-                    Coffee.Properties.Settings.Default.NetworkAdaptor = comboBox1.SelectedItem.ToString();// = comboBox1.Items.IndexOf();
-                    Coffee.Properties.Settings.Default.DownloadThreshold = (int)numericUpDown1.Value;
-                    Coffee.Properties.Settings.Default.UploadThreshold = (int)numericUpDown2.Value;
-                    Coffee.Properties.Settings.Default.DelayRemoveSleep = (int)numericUpDown3.Value;
-                    Coffee.Properties.Settings.Default.PressKeyInMinutes = (int)numericUpDown4.Value;  // Send virtual key press every X minutes
-                    Coffee.Properties.Settings.Default.EnDisKeyPress = checkBox1.Checked;
+                 //   Coffee_FF.Properties.Settings.Default.NetworkAdaptor = comboBox1.SelectedItem.ToString();// = comboBox1.Items.IndexOf();
+                 //   Coffee_FF.Properties.Settings.Default.DownloadThreshold = (int)numericUpDown1.Value;
+                 //   Coffee_FF.Properties.Settings.Default.UploadThreshold = (int)numericUpDown2.Value;
+                 //   Coffee_FF.Properties.Settings.Default.DelayRemoveSleep = (int)numericUpDown3.Value;
+                 //   Coffee_FF.Properties.Settings.Default.PressKeyInMinutes = (int)numericUpDown4.Value;  // Send virtual key press every X minutes
+                 //   Coffee_FF.Properties.Settings.Default.EnDisKeyPress = checkBox1.Checked;
+                 //   Coffee_FF.Properties.Settings.Default.DisDisplayStandby = checkBox1.Checked;
 
-                    Coffee.Properties.Settings.Default.Save();
+                 //   Coffee_FF.Properties.Settings.Default.Save();
+                      SaveState();
                 }
                 catch { }
 
@@ -356,6 +390,7 @@ namespace SleepFix
             }
 
         }
+       
 
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -376,7 +411,7 @@ namespace SleepFix
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
             foreach (var process in Process.GetProcesses())
             {
                 clbProcess.Items.Add(process.ProcessName);
@@ -413,21 +448,22 @@ namespace SleepFix
 
 
 
-                if (!(string.IsNullOrEmpty(Coffee.Properties.Settings.Default.NetworkAdaptor)))
-                    comboBox1.SelectedIndex = comboBox1.Items.IndexOf(Coffee.Properties.Settings.Default.NetworkAdaptor);
+                if (!(string.IsNullOrEmpty(Coffee_FF.Properties.Settings.Default.NetworkAdaptor)))
+                    comboBox1.SelectedIndex = comboBox1.Items.IndexOf(Coffee_FF.Properties.Settings.Default.NetworkAdaptor);
 
 
                 if (comboBox1.SelectedIndex < 0)
                 {
                     comboBox1.SelectedIndex = 0;
-                    MessageBox.Show("Error: " + Coffee.Properties.Settings.Default.NetworkAdaptor + " not found.");
+                    MessageBox.Show("Error: " + Coffee_FF.Properties.Settings.Default.NetworkAdaptor + " not found.");
                 }
 
-                numericUpDown1.Value = Coffee.Properties.Settings.Default.DownloadThreshold;
-                numericUpDown2.Value = Coffee.Properties.Settings.Default.UploadThreshold;
-                numericUpDown3.Value = Coffee.Properties.Settings.Default.DelayRemoveSleep; // Delay before remove sleep blocker
-                numericUpDown4.Value = Coffee.Properties.Settings.Default.PressKeyInMinutes; // Send virtual key press every X minutes
-                checkBox1.Checked = Coffee.Properties.Settings.Default.EnDisKeyPress; // Sending virutal key press enabeld when checked
+                numericUpDown1.Value = Coffee_FF.Properties.Settings.Default.DownloadThreshold;
+                numericUpDown2.Value = Coffee_FF.Properties.Settings.Default.UploadThreshold;
+                numericUpDown3.Value = Coffee_FF.Properties.Settings.Default.DelayRemoveSleep; // Delay before remove sleep blocker
+                numericUpDown4.Value = Coffee_FF.Properties.Settings.Default.PressKeyInMinutes; // Send virtual key press every X minutes
+                checkBox1.Checked = Coffee_FF.Properties.Settings.Default.EnDisKeyPress; // Sending virutal key press enabeld when checked
+                checkBox2.Checked = Coffee_FF.Properties.Settings.Default.DisDisplayStandby; // Keep Display Awake if checked
             }
 
     
@@ -435,6 +471,9 @@ namespace SleepFix
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+
+
+
 
             IPv4InterfaceStatistics  interfaceStatistic = Interfaces[comboBox1.SelectedIndex].GetIPv4Statistics();
             
@@ -464,6 +503,15 @@ namespace SleepFix
 
             }
 
+            // Display when Delay will be removed
+            if (DateTime.Now > ClearStopDelay) 
+                {
+                    Delay.Text = "Delay removed \n";
+                }
+            else
+                {
+                    Delay.Text = "Delay will be removed \n on: " + ClearStopDelay;
+                }
 
             if (bytesReceivedSpeed > numericUpDown1.Value)
             {
@@ -668,14 +716,37 @@ namespace SleepFix
 
         private void button4_Click(object sender, EventArgs e)
         {
-            string path = @"http://sourceforge.net/project/project_donations.php?group_id=540532";
+            string path = @"http://coffeeff.sourceforge.net/";
 
             Process p = new Process();
             p.StartInfo.FileName = path;
             p.Start();
         }
 
-                
+        private void button5_Click(object sender, EventArgs e)
+        {
+            SaveState();
+
+            Coffee_FF.Properties.Settings.Default.Save();
+            Environment.Exit(0);
+            // Application.Exit();
+        }
+
+        public void SaveState()
+        {
+            try
+            {
+                Coffee_FF.Properties.Settings.Default.NetworkAdaptor = comboBox1.SelectedItem.ToString();// = comboBox1.Items.IndexOf();
+                Coffee_FF.Properties.Settings.Default.DownloadThreshold = (int)numericUpDown1.Value;
+                Coffee_FF.Properties.Settings.Default.UploadThreshold = (int)numericUpDown2.Value;
+                Coffee_FF.Properties.Settings.Default.DelayRemoveSleep = (int)numericUpDown3.Value;
+                Coffee_FF.Properties.Settings.Default.PressKeyInMinutes = (int)numericUpDown4.Value;  // Send virtual key press every X minutes
+                Coffee_FF.Properties.Settings.Default.EnDisKeyPress = checkBox1.Checked;
+                Coffee_FF.Properties.Settings.Default.DisDisplayStandby = checkBox2.Checked;
+                Coffee_FF.Properties.Settings.Default.Save();
+            }
+            catch { }
+        }       
  
     }
 
@@ -723,6 +794,9 @@ namespace SleepFix
             return ((idleTime > 0) ? (idleTime / 1000) : 0);
         }
     }
+
+
+
 }
 
 // Added (Simulate key press)

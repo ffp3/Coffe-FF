@@ -185,7 +185,7 @@
                 {
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_93E4D856991A4B88A3B2A653FAED0B77"
                     {
-                    "Name" = "8:Coffee"
+                    "Name" = "8:Coffee_FF"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
@@ -236,7 +236,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Coffee"
         "ProductCode" = "8:{C6BD1462-1775-4116-8817-FD52535A451C}"
-        "PackageCode" = "8:{896AE6AF-5740-4B45-BF11-E5B010D33FC8}"
+        "PackageCode" = "8:{997C6FBE-2124-4744-90A4-9BCFDDE1698D}"
         "UpgradeCode" = "8:{3CAAEACF-B603-4AD9-949F-1636691F8012}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -358,7 +358,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_19E57F70F1964BCEBB64BA6C77499028"
             {
-            "Name" = "8:Coffee"
+            "Name" = "8:Coffee_FF"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -372,7 +372,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_EBCF963CCBBE4093B8AA0A5588143C13"
             {
-            "Name" = "8:Coffee"
+            "Name" = "8:Coffee_FF"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -818,7 +818,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_21CF07E3AF854E4DA53E6513D7384E4F"
             {
-            "SourcePath" = "8:..\\SleepFix\\obj\\x64\\Release\\Coffee.exe"
+            "SourcePath" = "8:..\\SleepFix\\obj\\x64\\Release\\Coffee_FF.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A9EDF3252DB849159CDBE214AFF595DA"
