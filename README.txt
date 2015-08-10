@@ -34,6 +34,8 @@ Done:
  Added option to keep monitor awake. 
  Display when sleep block will be removed.
  Added Close button.
+ Display active and inactive NIC cards.
+ Display status of selected NIC card.
 
 ***** 2.0.0 ****** (Updated by FireFly) 
 Done: 
