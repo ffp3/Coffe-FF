@@ -231,6 +231,17 @@
                 {
                 }
             }
+            "{1525181F-901A-416C-8A58-119130FE478E}:_94FF22B66C834526BDC4015CD3FD03FE"
+            {
+            "Name" = "8:#1914"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:SystemFolder"
+                "Folders"
+                {
+                }
+            }
         }
         "LaunchCondition"
         {
@@ -248,7 +259,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Coffee"
         "ProductCode" = "8:{B3F75D6B-727E-49CE-9849-D2D52B507640}"
-        "PackageCode" = "8:{7B2A4B4D-7203-4DC8-A562-F43151CA4D35}"
+        "PackageCode" = "8:{299468AF-A406-4019-85BC-89D2D37AB3CC}"
         "UpgradeCode" = "8:{5CAF36F2-FDF2-48AA-9D49-4FB08A40D39F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

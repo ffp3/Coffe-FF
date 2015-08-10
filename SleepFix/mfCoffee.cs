@@ -46,6 +46,7 @@ namespace SleepFix
 
         
         List<NetworkInterface> Interfaces = new List<NetworkInterface>();
+            
         long lngBytesSend = 0;
         long lngBtyesReceived = 0;
         bool firsttick = true;
@@ -204,7 +205,7 @@ namespace SleepFix
                     PowerSetRequest(DownloadPowerRequest, PowerRequestType.PowerRequestSystemRequired);
                     if (checkBox2.Checked)
                     {
-                        PowerSetRequest(ProcessPowerRequest, PowerRequestType.PowerRequestDisplayRequired);
+                        PowerSetRequest(DownloadPowerRequest, PowerRequestType.PowerRequestDisplayRequired);
                     }
                     DownloadPrevented = true;
                     // 
@@ -239,7 +240,7 @@ namespace SleepFix
                     PowerSetRequest(UploadPowerRequest, PowerRequestType.PowerRequestSystemRequired);
                     if (checkBox2.Checked)
                     {
-                        PowerSetRequest(ProcessPowerRequest, PowerRequestType.PowerRequestDisplayRequired);
+                        PowerSetRequest(UploadPowerRequest, PowerRequestType.PowerRequestDisplayRequired);
                     }
                     UploadPrevented = true;
                     // 
@@ -408,10 +409,9 @@ namespace SleepFix
 
         #endregion
 
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+
             foreach (var process in Process.GetProcesses())
             {
                 clbProcess.Items.Add(process.ProcessName);
@@ -421,7 +421,8 @@ namespace SleepFix
 
             foreach (var nic in NetworkInterface.GetAllNetworkInterfaces())
             {
-                if (nic.OperationalStatus == OperationalStatus.Up)
+               // if (nic.OperationalStatus == OperationalStatus.Up)
+                if (nic.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
                 {
                     if (!nic.Description.StartsWith("Software"))
                     {
@@ -446,8 +447,6 @@ namespace SleepFix
             else
             {
 
-
-
                 if (!(string.IsNullOrEmpty(Coffee_FF.Properties.Settings.Default.NetworkAdaptor)))
                     comboBox1.SelectedIndex = comboBox1.Items.IndexOf(Coffee_FF.Properties.Settings.Default.NetworkAdaptor);
 
@@ -471,9 +470,6 @@ namespace SleepFix
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-
-
-
 
             IPv4InterfaceStatistics  interfaceStatistic = Interfaces[comboBox1.SelectedIndex].GetIPv4Statistics();
             
@@ -502,7 +498,28 @@ namespace SleepFix
                 lblDownLoad.Text = "Download: " + bytesReceivedSpeed.ToString() + " KB/s";
 
             }
+            
 
+            int CardIndx2 = 0;
+                foreach (var nic2 in NetworkInterface.GetAllNetworkInterfaces())
+                {
+
+                    if (nic2.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || nic2.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+                    {
+                        if (!nic2.Description.StartsWith("Software"))
+                        {
+                            if (!nic2.Description.StartsWith("Teredo"))
+                            {
+                                if (comboBox1.SelectedIndex == CardIndx2)
+                                { 
+                                    lblOP.Text = "Adapter Operational status:" + nic2.OperationalStatus;
+                                }
+                                CardIndx2++;
+                            }
+                        }
+                    }
+                }
+             
             // Display when Delay will be removed
             if (DateTime.Now > ClearStopDelay) 
                 {
@@ -624,7 +641,6 @@ namespace SleepFix
         }
 
      
-
         private void button1_Click(object sender, EventArgs e)
         {
             if (IsAdmin())
@@ -657,7 +673,6 @@ namespace SleepFix
         }
 
      
-
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
@@ -676,8 +691,6 @@ namespace SleepFix
             }
         }
 
-     
-   
         private void button3_Click(object sender, EventArgs e)
         {
             if (IsAdmin())
@@ -746,6 +759,30 @@ namespace SleepFix
                 Coffee_FF.Properties.Settings.Default.Save();
             }
             catch { }
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            // When checked/unchecked clear Downoad, Upload and Process...
+            DownloadPrevented = true;
+            UploadPrevented = true;
+            ProcessPrevented = true;
+            SystemNotRequired("Download");
+            SystemNotRequired("Upload");
+            SystemNotRequired("Process");
+            ClearStopDelay = DateTime.Now;
+            Console.WriteLine(DateTime.Now + "Cleared on Display (Downoad, Upload and Process) Check/UNCheck");
+        }
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            DownloadPrevented = true;
+            UploadPrevented = true;
+            ProcessPrevented = true;
+            SystemNotRequired("Download");
+            SystemNotRequired("Upload");
+            SystemNotRequired("Process");
+            ClearStopDelay = DateTime.Now;
+            Console.WriteLine(DateTime.Now + "Cleared on Virtual Key Press (Downoad, Upload and Process) Check/UNCheck");
         }       
  
     }

@@ -3,6 +3,7 @@ C:\BRTV\Coffee\Coffe-FF\Milk\bin\Release\Milk.exe.manifest
 C:\BRTV\Coffee\Coffe-FF\Milk\bin\Release\Milk.application
 C:\BRTV\Coffee\Coffe-FF\Milk\bin\Release\Milk.exe
 C:\BRTV\Coffee\Coffe-FF\Milk\bin\Release\Milk.pdb
+C:\BRTV\Coffee\Coffe-FF\Milk\obj\x86\Release\Milk.csprojResolveAssemblyReference.cache
 C:\BRTV\Coffee\Coffe-FF\Milk\obj\x86\Release\Milk.mfMilk.resources
 C:\BRTV\Coffee\Coffe-FF\Milk\obj\x86\Release\Milk.Properties.Resources.resources
 C:\BRTV\Coffee\Coffe-FF\Milk\obj\x86\Release\Milk.csproj.GenerateResource.Cache

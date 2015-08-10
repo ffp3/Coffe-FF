@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Coffee_FF.exe" size="329656">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Coffee_FF.exe" size="330680">
       <assemblyIdentity name="Coffee_FF" version="2.0.1.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ukdACIJXef7XnL/wDPEndJjZMR88LlhdO+9coQV3QLk=</dsig:DigestValue>
+        <dsig:DigestValue>bc8MwCfyDOwWtjXKquhToqHKy5WxMGArr7avloWcNGY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
