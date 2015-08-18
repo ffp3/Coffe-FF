@@ -33,7 +33,10 @@ namespace SleepFix
                 AddShieldToButton(button1); //Important
                 AddShieldToButton(button3);
             }
+
+
         }
+
 
 
         Delay d = new Delay();
@@ -167,7 +170,12 @@ namespace SleepFix
         bool DownloadPrevented = false;
         bool UploadPrevented = false;
         bool ProcessPrevented = false;
-  
+        bool FDuplicate = false;
+        String ListADD;
+        String ListDELETE;
+        bool TabRefreshOnce;
+        bool RunDeleteOnce = false;
+        bool F5KeyTrigger = false;
         #endregion
 
 
@@ -373,15 +381,6 @@ namespace SleepFix
 
                 try
                 {
-                 //   Coffee_FF.Properties.Settings.Default.NetworkAdaptor = comboBox1.SelectedItem.ToString();// = comboBox1.Items.IndexOf();
-                 //   Coffee_FF.Properties.Settings.Default.DownloadThreshold = (int)numericUpDown1.Value;
-                 //   Coffee_FF.Properties.Settings.Default.UploadThreshold = (int)numericUpDown2.Value;
-                 //   Coffee_FF.Properties.Settings.Default.DelayRemoveSleep = (int)numericUpDown3.Value;
-                 //   Coffee_FF.Properties.Settings.Default.PressKeyInMinutes = (int)numericUpDown4.Value;  // Send virtual key press every X minutes
-                 //   Coffee_FF.Properties.Settings.Default.EnDisKeyPress = checkBox1.Checked;
-                 //   Coffee_FF.Properties.Settings.Default.DisDisplayStandby = checkBox1.Checked;
-
-                 //   Coffee_FF.Properties.Settings.Default.Save();
                       SaveState();
                 }
                 catch { }
@@ -414,7 +413,30 @@ namespace SleepFix
 
             foreach (var process in Process.GetProcesses())
             {
-                clbProcess.Items.Add(process.ProcessName);
+                FDuplicate = false;
+                // Test for duplicates if no duplicates found add item
+                foreach (object item in clbProcess.Items)
+                {
+                    if (clbProcess.CheckedItems.Contains(item))
+                    {
+                        if ((String)process.ProcessName == (String)item)
+                        {
+                            FDuplicate = true;
+                        }
+                    }
+                    else
+                    {
+                        if ((String)process.ProcessName == (String)item)
+                        {
+                            FDuplicate = true;
+                        }
+                        
+                    }
+                }
+                if (FDuplicate == false)
+                {
+                    clbProcess.Items.Add(process.ProcessName);
+                }
 
             }
 
@@ -536,18 +558,10 @@ namespace SleepFix
                 {
                     SystemRequired("Download");
                     ClearStopDelay = DateTime.Now.AddMinutes((int)numericUpDown3.Value); // Reset Delay every time Download detected
-                    // Console.WriteLine(ClearStopDelay + "Set Delay Timer");
 
-                    ////
-                    // Test and Understand how DateTime works (Make sure 5 minutes pass or more before reset idle key press)
-                    ////
-                    //Console.WriteLine("Download reset Timer Before 1 minutes");
                     if (DateTime.Now > compareDate && checkBox1.Checked)
                     {
-                        
-                        compareDate = DateTime.Now.AddMinutes((int)numericUpDown4.Value); // Need change to 5 minutes
-                        // Console.WriteLine(compareDate + "Download reset Timer");
-
+                        compareDate = DateTime.Now.AddMinutes((int)numericUpDown4.Value); 
                         d.delay();
                     }
                     
@@ -558,7 +572,14 @@ namespace SleepFix
                 if (DateTime.Now > ClearStopDelay) //Delay for X minutes before clear sleep block
                 {
                     SystemNotRequired("Download");
-                    //Console.WriteLine(DateTime.Now + " > " + ClearStopDelay + "Delay Timer Removed");
+                }
+                else
+                {
+                    if (DateTime.Now > compareDate && checkBox1.Checked)
+                    {
+                        compareDate = DateTime.Now.AddMinutes((int)numericUpDown4.Value);
+                        d.delay();
+                    }
                 }
             }
 
@@ -569,17 +590,10 @@ namespace SleepFix
                 {
                     SystemRequired("Upload");
                     ClearStopDelay = DateTime.Now.AddMinutes((int)numericUpDown3.Value); // Reset Delay every time Upload detected
-                    // Console.WriteLine(ClearStopDelay + "Set Delay Timer");
 
-                    ////
-                    // Test and Understand how DateTime works (Make sure 5 minutes pass or more before reset idle key press)
-                    ////
                     if (DateTime.Now > compareDate && checkBox1.Checked)
                     {
-                        
                         compareDate = DateTime.Now.AddMinutes((int)numericUpDown4.Value);
-                        // Console.WriteLine(compareDate + "Upload reset Timer");
-
                         d.delay();
                     }
 
@@ -590,51 +604,142 @@ namespace SleepFix
                 if (DateTime.Now > ClearStopDelay) //Delay for X minutes before clear sleep block
                 {
                     SystemNotRequired("Upload");
-                    // Console.WriteLine(DateTime.Now + " > " + ClearStopDelay + "Delay Timer Removed");
+                }
+                else
+                {
+                    if (DateTime.Now > compareDate && checkBox1.Checked)
+                    {
+                        compareDate = DateTime.Now.AddMinutes((int)numericUpDown4.Value);
+                        d.delay();
+                    }
                 }
             }
 
             lngBytesSend = interfaceStatistic.BytesSent;
             lngBtyesReceived = interfaceStatistic.BytesReceived;
 
+            if (tabControl1.SelectedIndex != 1)
+            {
+                TabRefreshOnce = false;
+                RunDeleteOnce = false;
+            }
 
             bool systemRequired = false;
-
+            List<string> ListToDelete = new List<string>();
+            
             foreach (var process in Process.GetProcesses())
             {
-                foreach (string processList in clbProcess.CheckedItems)
+                // Go through all checke/unchecked box one time when tab2 is active
+                // If on Tab2 (Programs start updating clbProcess if not do regular monitoring
+                if (tabControl1.SelectedIndex == 1 && TabRefreshOnce == false || F5KeyTrigger == true && tabControl1.SelectedIndex == 1)
                 {
-                    if (processList == process.ProcessName)
+                    ListADD = "ADD";
+                    foreach (object item in clbProcess.Items)
                     {
-                        systemRequired = true;
+                        
+                        if (clbProcess.CheckedItems.Contains(item))
+                        {
+
+                            if ((String)process.ProcessName == (String)item)
+                            {
+                                ListADD = "NULL";
+                                systemRequired = true;
+                                if (RunDeleteOnce == true)
+                                { break; }
+                            }
+                        }
+                        else
+                        {
+                            if ((String)process.ProcessName == (String)item)
+                            {
+                                ListADD = "NULL";
+                                if (RunDeleteOnce == true)
+                                { break; }
+                            }
+                        }
+                        // Find why stop removing items from CBL (removes removes then stop...)
+
+
+                        if (RunDeleteOnce == false)
+                        {
+                            // Reverse Check from CheckedListBox items to be deleted
+                            ListDELETE = "DELETE";
+                            foreach (var process2 in Process.GetProcesses())
+                            {
+                                if ((String)process2.ProcessName == (String)item)
+                                {
+                                    ListDELETE = "NULL";
+                                    break;
+                                }
+                            }
+                            if (ListDELETE == "DELETE")
+                                {
+                                    ListToDelete.Add((String)item);
+                                }
+                        }
                     }
+                        if (ListADD == "ADD")
+                        {
+                            clbProcess.Items.Add(process.ProcessName);
+                        }
+                        RunDeleteOnce = true;
+                        foreach (object DeleteInactive in ListToDelete)
+                        {
+                            clbProcess.Items.Remove(DeleteInactive);
+                        }
+                        ListToDelete.Clear();
                 }
+                else
+                {
+                    
+                    foreach (string processList in clbProcess.CheckedItems)
+                    {
+                        if (processList == process.ProcessName)
+                        {
+                            systemRequired = true;
+                        }
+                    }
+
+                }
+
+            }
+
+            F5KeyTrigger = false;
+            RunDeleteOnce = false;
+            XXPrograms.Text = clbProcess.Items.Count.ToString() + " Programs";
+            // Should set to true once tab was activated
+            if (tabControl1.SelectedIndex == 1)
+            // Remove F5 key press trigger. Catch Key function did not work replacing to button click.
+            {
+                TabRefreshOnce = true;
             }
 
             if (systemRequired)
             {
                 SystemRequired("Process");
                 ClearStopDelay = DateTime.Now.AddMinutes((int)numericUpDown3.Value); // Reset Delay every time Process detected
-                //Console.WriteLine(ClearStopDelay + "Set Delay Timer");
 
-                ////
-                // Test and Understand how DateTime works (Make sure 5 minutes pass or more before reset idle key press)
-                ////
                 if (DateTime.Now > compareDate && checkBox1.Checked)
                 {
                     compareDate = DateTime.Now.AddMinutes((int)numericUpDown4.Value);
-                    // Console.WriteLine(compareDate + "Process reset Timer!!! Virtual Key Pressed");
-
                     d.delay();
                 }
                 
             }
             else
             {
-                if (DateTime.Now > ClearStopDelay) //Delay for X minutes before clear sleep block
+                if (DateTime.Now > ClearStopDelay)
                 {
                     SystemNotRequired("Process");
-                    // Console.WriteLine(DateTime.Now + " > " + ClearStopDelay + "Delay Timer Removed");
+                }
+                else
+                {
+                    if (DateTime.Now > compareDate && checkBox1.Checked)
+                    {
+
+                        compareDate = DateTime.Now.AddMinutes((int)numericUpDown4.Value);
+                        d.delay();
+                    }
                 }
             }
 
@@ -771,7 +876,6 @@ namespace SleepFix
             SystemNotRequired("Upload");
             SystemNotRequired("Process");
             ClearStopDelay = DateTime.Now;
-            Console.WriteLine(DateTime.Now + "Cleared on Display (Downoad, Upload and Process) Check/UNCheck");
         }
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -782,7 +886,27 @@ namespace SleepFix
             SystemNotRequired("Upload");
             SystemNotRequired("Process");
             ClearStopDelay = DateTime.Now;
-            Console.WriteLine(DateTime.Now + "Cleared on Virtual Key Press (Downoad, Upload and Process) Check/UNCheck");
+        }
+
+        private void groupBox8_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void clbProcess_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            SystemRequired("Process");
+            ClearStopDelay = DateTime.Now.AddMinutes((int)numericUpDown5.Value);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            F5KeyTrigger = true;
         }       
  
     }
