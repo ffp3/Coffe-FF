@@ -45,6 +45,7 @@ namespace SleepFix
         ////
         DateTime compareDate = DateTime.Now; 
         DateTime ClearStopDelay = DateTime.Now;
+        DateTime ClearStopDelay2 = DateTime.Now;
         //powercfg -requests
 
         
@@ -54,6 +55,10 @@ namespace SleepFix
         long lngBtyesReceived = 0;
         bool firsttick = true;
         bool menuexit = false;
+        bool FileDenied = false;
+        bool ProcessChecked = false;
+
+        List<string> ListDeniedAcessFiles = new List<string>();
 
         [DllImport("user32")]
         public static extern UInt32 SendMessage
@@ -410,36 +415,90 @@ namespace SleepFix
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            foreach (var process in Process.GetProcesses())
+            /*
+            // Not needed after new way to update running processes
+            foreach (var process in Process.GetProcesses() )
             {
-                FDuplicate = false;
-                // Test for duplicates if no duplicates found add item
-                foreach (object item in clbProcess.Items)
+                // Check and generate a list of denied processes
+                try
                 {
-                    if (clbProcess.CheckedItems.Contains(item))
-                    {
-                        if ((String)process.ProcessName == (String)item)
-                        {
-                            FDuplicate = true;
-                        }
-                    }
-                    else
-                    {
-                        if ((String)process.ProcessName == (String)item)
-                        {
-                            FDuplicate = true;
-                        }
-                        
-                    }
+                    var FakeTest = process.MainModule.FileName;
                 }
-                if (FDuplicate == false)
+                catch
                 {
-                    clbProcess.Items.Add(process.ProcessName);
+                    ListDeniedAcessFiles.Add((String)process.ProcessName);
                 }
 
+                FileDenied = false;
+                foreach (object LDAF in ListDeniedAcessFiles)
+                {
+                    if ((String)process.ProcessName == (String)LDAF)
+                        {
+                            // If Idle or System skip so it will not be added to the list
+                            FileDenied = true;
+                        }
+
+                }
+                if (!FileDenied)
+                {
+                    FDuplicate = false;
+                    // Test for duplicates if no duplicates found add item
+                    foreach (object item in clbProcess.Items)
+                    {
+
+                        if (clbProcess.CheckedItems.Contains(item))
+                        {
+                            try
+                            {
+                                FileVersionInfo myFileVersionInfo = FileVersionInfo.GetVersionInfo(process.MainModule.FileName);
+                                if ((String)(process.ProcessName + " (" + myFileVersionInfo.FileDescription + ")") == (String)item)
+                                {
+                                    FDuplicate = true;
+                                }
+                            }
+                            catch
+                            {
+                                if ((String)process.ProcessName == (String)item)
+                                {
+                                    FDuplicate = true;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            try
+                            {
+                                FileVersionInfo myFileVersionInfo = FileVersionInfo.GetVersionInfo(process.MainModule.FileName);
+                                if ((String)(process.ProcessName + " (" + myFileVersionInfo.FileDescription + ")") == (String)item)
+                                {
+                                    FDuplicate = true;
+                                }
+                            }
+                            catch
+                            {
+                                if ((String)process.ProcessName == (String)item)
+                                {
+                                    FDuplicate = true;
+                                }
+                            }
+                        }
+
+                    }
+                    if (FDuplicate == false)
+                    {
+                            try
+                            {
+                                FileVersionInfo myFileVersionInfo = FileVersionInfo.GetVersionInfo(process.MainModule.FileName);
+                                clbProcess.Items.Add(process.ProcessName + " (" + myFileVersionInfo.FileDescription + ")");
+                            }
+                            catch
+                            {
+                                clbProcess.Items.Add(process.ProcessName);
+                            }
+                    }
+                }
             }
-
+            */
 
             foreach (var nic in NetworkInterface.GetAllNetworkInterfaces())
             {
@@ -543,13 +602,17 @@ namespace SleepFix
                 }
              
             // Display when Delay will be removed
-            if (DateTime.Now > ClearStopDelay) 
+                if (DateTime.Now > ClearStopDelay && DateTime.Now > ClearStopDelay2) 
                 {
                     Delay.Text = "Delay removed \n";
                 }
             else
                 {
-                    Delay.Text = "Delay will be removed \n on: " + ClearStopDelay;
+                    if (ClearStopDelay > ClearStopDelay2)
+                    { Delay.Text = "Delay will be removed \n on: " + ClearStopDelay; }
+                    else
+                    { Delay.Text = "Delay will be removed \n on: " + ClearStopDelay2; }
+                    
                 }
 
             if (bytesReceivedSpeed > numericUpDown1.Value)
@@ -626,87 +689,490 @@ namespace SleepFix
 
             bool systemRequired = false;
             List<string> ListToDelete = new List<string>();
+            List<string> ListCheckedBoxes = new List<string>();
+            // Alternative new way to update process list (Updates when switched to program tab)
+            // Old way to many checks and loops also added description to the file.
             
-            foreach (var process in Process.GetProcesses())
+            
+
+
+            // Repopulate list box with processes
+
+            if (tabControl1.SelectedIndex == 1 && TabRefreshOnce == false || F5KeyTrigger == true && tabControl1.SelectedIndex == 1)
             {
-                // Go through all checke/unchecked box one time when tab2 is active
-                // If on Tab2 (Programs start updating clbProcess if not do regular monitoring
-                if (tabControl1.SelectedIndex == 1 && TabRefreshOnce == false || F5KeyTrigger == true && tabControl1.SelectedIndex == 1)
-                {
-                    ListADD = "ADD";
-                    foreach (object item in clbProcess.Items)
+
+                // Make a list of checked processes
+                ListCheckedBoxes.Clear();
+                foreach (object item in clbProcess.Items)
                     {
-                        
                         if (clbProcess.CheckedItems.Contains(item))
                         {
+                            // Add checked processes from list box
+                            ListCheckedBoxes.Add((String)item);
+                        }
+                    }
 
-                            if ((String)process.ProcessName == (String)item)
+                // clear listbox
+                clbProcess.Items.Clear();
+
+                foreach (var process in Process.GetProcesses())
+                {
+
+                    FileDenied = false;
+                    foreach (object LDAF in ListDeniedAcessFiles)
+                    {
+                        if ((String)process.ProcessName == (String)LDAF)
+                        {
+                            // If Idle or System skip so it will not be added to the list
+                            FileDenied = true;
+                            // exit loop
+                            { break; }
+                        }
+
+                    }
+                    // *** Additional catch if new Denied process found
+
+                    // Check and generate a list of denied processes
+                    if (!FileDenied)
+                    {
+                        try
+                        {
+                            var FakeTest = process.MainModule.FileName;
+                        }
+                        catch
+                        {
+                            ListDeniedAcessFiles.Add((String)process.ProcessName);
+                            FileDenied = true;
+                        }
+                    }
+
+                    if (!FileDenied)
+                    {
+                        // NEW CODE WILL CLEAR CLBPROCESS BOX THEN ADD PROCESSES
+
+                            FDuplicate = false;
+                            // Test for duplicates if no duplicates found add item
+                            foreach (object item in clbProcess.Items)
                             {
-                                ListADD = "NULL";
+                                if (clbProcess.CheckedItems.Contains(item))
+                                {
+                                    try
+                                    {
+                                        FileVersionInfo myFileVersionInfo = FileVersionInfo.GetVersionInfo(process.MainModule.FileName);
+                                        if ((String)(process.ProcessName + " (" + myFileVersionInfo.FileDescription + ")") == (String)item)
+                                        {
+                                            FDuplicate = true;
+                                        }
+                                    }
+                                    catch
+                                    {
+                                        if ((String)process.ProcessName == (String)item)
+                                        {
+                                            FDuplicate = true;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        FileVersionInfo myFileVersionInfo = FileVersionInfo.GetVersionInfo(process.MainModule.FileName);
+                                        if ((String)(process.ProcessName + " (" + myFileVersionInfo.FileDescription + ")") == (String)item)
+                                        {
+                                            FDuplicate = true;
+                                        }
+                                    }
+                                    catch
+                                    {
+                                        if ((String)process.ProcessName == (String)item)
+                                        {
+                                            FDuplicate = true;
+                                        }
+                                    }
+                                }
+                            }
+                            if (FDuplicate == false)
+                            {
+                                // Add processes to list box
+                                ProcessChecked = false;
+                                foreach (object ReCheckCLB in ListCheckedBoxes)
+                                {
+                                    try
+                                    {
+                                        FileVersionInfo myFileVersionInfo = FileVersionInfo.GetVersionInfo(process.MainModule.FileName);
+                                        if ((String)ReCheckCLB == (String)process.ProcessName + " (" + myFileVersionInfo.FileDescription + ")")
+                                        {
+                                            ProcessChecked = true;
+                                        }
+                                    }
+                                    catch
+                                    {
+                                        if ((String)ReCheckCLB == (String)process.ProcessName)
+                                        {
+                                            ProcessChecked = true;
+                                        }
+                                    }
+                                }
+
+                                if (!ProcessChecked)
+                                {
+                                    try
+                                    {
+                                            FileVersionInfo myFileVersionInfo = FileVersionInfo.GetVersionInfo(process.MainModule.FileName);
+                                            clbProcess.Items.Add((String)process.ProcessName + " (" + myFileVersionInfo.FileDescription + ")");
+                                    }
+                                    catch
+                                    {
+
+                                            clbProcess.Items.Add((String)process.ProcessName);
+                                    }
+                                }
+                                else
+                                {
+                                    // Put check again on unchecked processes
+                                        try
+                                        {
+                                            FileVersionInfo myFileVersionInfo = FileVersionInfo.GetVersionInfo(process.MainModule.FileName);
+                                            clbProcess.Items.Add((String)process.ProcessName + " (" + myFileVersionInfo.FileDescription + ")", CheckState.Checked);
+                                        }
+                                        catch
+                                        {
+                                                clbProcess.Items.Add((String)process.ProcessName, CheckState.Checked);
+                                        }
+                                }
+                                // ListCheckedBoxes.Clear();
+                            }
+                    }
+                }
+            }
+// ###########################
+// Check if there selected items in list box then check if process exsist
+// ###########################
+
+            foreach (string processList in clbProcess.CheckedItems)
+            {
+                systemRequired = false;
+                foreach (var process in Process.GetProcesses())
+                {
+                    FileDenied = false;
+                    foreach (object LDAF in ListDeniedAcessFiles)
+                    {
+                        if ((String)process.ProcessName == (String)LDAF)
+                        {
+                            // If Idle or System skip so it will not be added to the list
+                            FileDenied = true;
+                        }
+
+                    }
+
+                    if (!FileDenied)
+                    {
+                        try
+                        { // .MainModule.FileName; gives path to filename replaced all FileVersionInfo.FileDescription-.
+                            FileVersionInfo myFileVersionInfo = FileVersionInfo.GetVersionInfo(process.MainModule.FileName);
+                            if ((String)processList == (String)(process.ProcessName + " (" + myFileVersionInfo.FileDescription + ")"))
+                            {
                                 systemRequired = true;
-                                if (RunDeleteOnce == true)
-                                { break; }
+                            }
+                        }
+                        catch
+                        {
+                            if ((String)processList == (String)process.ProcessName)
+                            {
+                                systemRequired = true;
+                            }
+                        }
+                    }
+
+                }
+                    if (!systemRequired)
+                    {
+                        ListToDelete.Add((String)processList);
+                    }
+            }
+
+                foreach (object DeleteInactive in ListToDelete)
+                {
+                    clbProcess.Items.Remove(DeleteInactive);
+                }
+                ListToDelete.Clear();
+
+
+
+            // Test list box if contains chekced items. If there some then go through processes
+            // if (clbProcess.SelectedIndex != -1)
+//            {
+            /*
+
+                foreach (var process in Process.GetProcesses())
+                {
+
+                    FileDenied = false;
+                    foreach (object LDAF in ListDeniedAcessFiles)
+                    {
+                        if (process.ProcessName.ToString() == LDAF)
+                        {
+                            // If Idle or System skip so it will not be added to the list
+                            FileDenied = true;
+                        }
+
+                    }
+
+                if (!FileDenied)
+                
+                    {
+                        // NEW CODE WILL CLEAR CLBPROCESS BOX THEN ADD NEW PROCESSES
+                        if (tabControl1.SelectedIndex == 1 && TabRefreshOnce == false || F5KeyTrigger == true && tabControl1.SelectedIndex == 1)
+                        {
+                            foreach (object item in clbProcess.Items)
+                            {
+                                if (clbProcess.CheckedItems.Contains(item))
+                                {
+                                    // Add checked processes from list box
+                                    ListCheckedBoxes.Add((String)item);
+
+                                }
+                            }
+                            // clear listbox
+                            clbProcess.ResetText();
+                            FDuplicate = false;
+                            // Test for duplicates if no duplicates found add item
+                            foreach (object item in clbProcess.Items)
+                            {
+                                if (clbProcess.CheckedItems.Contains(item))
+                                {
+                                    try
+                                    {
+                                        if ((String)(process.ProcessName + " (" + process.MainModule.FileName.ToString() + ")") == (String)item)
+                                        {
+                                            FDuplicate = true;
+                                        }
+                                    }
+                                    catch
+                                    {
+                                        if ((String)process.ProcessName == (String)item)
+                                        {
+                                            FDuplicate = true;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        if ((String)(process.ProcessName + " (" + process.MainModule.FileName.ToString() + ")") == (String)item)
+                                        {
+                                            FDuplicate = true;
+                                        }
+                                    }
+                                    catch
+                                    {
+                                        if ((String)process.ProcessName == (String)item)
+                                        {
+                                            FDuplicate = true;
+                                        }
+                                    }
+                                }
+                            }
+                            if (FDuplicate == false)
+                            {
+                                // Check again checked processes
+                                foreach (object ReCheckCLB in ListCheckedBoxes)
+                                {
+                                    if (process.ProcessName.ToString() != "Idle" || process.ProcessName.ToString() != "System")
+                                    {
+                                        try
+                                        {
+                                            if (ReCheckCLB == process.ProcessName + " (" + process.MainModule.FileName.ToString() + ")")
+                                            {
+                                                clbProcess.Items.Add(process.ProcessName + " (" + process.MainModule.FileName.ToString() + ")", CheckState.Checked);
+
+                                            }
+                                            else
+                                            {
+                                                clbProcess.Items.Add(process.ProcessName + " (" + process.MainModule.FileName.ToString() + ")");
+                                            }
+                                        }
+                                        catch
+                                        {
+                                            if (ReCheckCLB == process.ProcessName.ToString())
+                                            {
+                                                clbProcess.Items.Add(process.ProcessName, CheckState.Checked);
+
+                                            }
+                                            else
+                                            {
+                                                clbProcess.Items.Add(process.ProcessName);
+                                            }
+                                        }
+
+                                    }
+
+                                }
+                                ListCheckedBoxes.Clear();
                             }
                         }
                         else
                         {
-                            if ((String)process.ProcessName == (String)item)
-                            {
-                                ListADD = "NULL";
-                                if (RunDeleteOnce == true)
-                                { break; }
-                            }
-                        }
-                        // Find why stop removing items from CBL (removes removes then stop...)
 
-
-                        if (RunDeleteOnce == false)
-                        {
-                            // Reverse Check from CheckedListBox items to be deleted
-                            ListDELETE = "DELETE";
-                            foreach (var process2 in Process.GetProcesses())
+                            foreach (string processList in clbProcess.CheckedItems)
                             {
-                                if ((String)process2.ProcessName == (String)item)
+                                try
+                                { // .MainModule.FileName; gives path to filename replaced all FileVersionInfo.FileDescription-.
+                                    if (processList == (process.ProcessName + " (" + process.MainModule.FileName.ToString() + ")"))
+                                    {
+                                        systemRequired = true;
+                                    }
+                                }
+                                catch
                                 {
-                                    ListDELETE = "NULL";
-                                    break;
+                                    if (processList == process.ProcessName)
+                                    {
+                                        systemRequired = true;
+                                    }
                                 }
                             }
-                            if (ListDELETE == "DELETE")
-                                {
-                                    ListToDelete.Add((String)item);
-                                }
+
                         }
                     }
-                        if (ListADD == "ADD")
-                        {
-                            clbProcess.Items.Add(process.ProcessName);
-                        }
-                        RunDeleteOnce = true;
-                        foreach (object DeleteInactive in ListToDelete)
-                        {
-                            clbProcess.Items.Remove(DeleteInactive);
-                        }
-                        ListToDelete.Clear();
-                }
-                else
-                {
-                    
-                    foreach (string processList in clbProcess.CheckedItems)
+
+                    */
+                    // *** Old Code ***
+                    /*
+                    // TEST NEW CODE BELLOW CODE REMOVED
+                    // Go through all checke/unchecked box one time when tab2 is active
+                    // If on Tab2 (Programs start updating clbProcess if not do regular monitoring
+                    if (tabControl1.SelectedIndex == 1 && TabRefreshOnce == false || F5KeyTrigger == true && tabControl1.SelectedIndex == 1)
                     {
-                        if (processList == process.ProcessName)
+                        ListADD = "ADD";
+                        foreach (object item in clbProcess.Items)
                         {
-                            systemRequired = true;
+                            try
+                            {
+                                if (clbProcess.CheckedItems.Contains(item))
+                                {
+
+                                    if ((String)(process.ProcessName + " (" + process.MainModule.FileName.ToString() + ")") == (String)item)
+                                    {
+                                        ListADD = "NULL";
+                                        systemRequired = true;
+                                        if (RunDeleteOnce == true)
+                                        { break; }
+                                    }
+                                }
+                                else
+                                {
+                                    if ((String)(process.ProcessName + " (" + process.MainModule.FileName.ToString() + ")") == (String)item)
+                                    {
+                                        ListADD = "NULL";
+                                        if (RunDeleteOnce == true)
+                                        { break; }
+                                    }
+                                }
+                            }
+                            catch
+                            {
+
+                                if (clbProcess.CheckedItems.Contains(item))
+                                {
+
+                                    if ((String)process.ProcessName == (String)item)
+                                    {
+                                        ListADD = "NULL";
+                                        systemRequired = true;
+                                        if (RunDeleteOnce == true)
+                                        { break; }
+                                    }
+                                }
+                                else
+                                {
+                                    if ((String)process.ProcessName == (String)item)
+                                    {
+                                        ListADD = "NULL";
+                                        if (RunDeleteOnce == true)
+                                        { break; }
+                                    }
+                                }
+                            }
+                            // Find why stop removing items from CBL (removes removes then stop...)
+
+
+                            if (RunDeleteOnce == false)
+                            {
+                                    // Reverse Check from CheckedListBox items to be deleted
+                                    ListDELETE = "DELETE";
+                                    foreach (var process2 in Process.GetProcesses())
+                                    {
+                                        try
+                                        {
+                                            if ((String)(process2.ProcessName + " (" + process2MainModule.FileName.ToString() + ")") == (String)item)
+                                            {
+                                                ListDELETE = "NULL";
+                                                break;
+                                            }
+                                        }
+                                        catch
+                                        {
+                                            if ((String)process2.ProcessName == (String)item)
+                                            {
+                                                ListDELETE = "NULL";
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (ListDELETE == "DELETE")
+                                    {
+                                        ListToDelete.Add((String)item);
+                                    }
+                            }
                         }
+                            if (ListADD == "ADD")
+                            {
+                                try
+                                {
+                                    clbProcess.Items.Add(process.ProcessName + " (" + process.MainModule.FileName.ToString() + ")");
+                                }
+                                catch
+                                {
+                                    clbProcess.Items.Add(process.ProcessName);
+                                }
+                            }
+                            RunDeleteOnce = true;
+                            foreach (object DeleteInactive in ListToDelete)
+                            {
+                                clbProcess.Items.Remove(DeleteInactive);
+                            }
+                            ListToDelete.Clear();
                     }
+                    else
+                    {
+                    
+                        foreach (string processList in clbProcess.CheckedItems)
+                        {
+                            try
+                            {
+                                if (processList == (process.ProcessName + " (" + process.MainModule.FileName.ToString() + ")"))
+                                {
+                                    systemRequired = true;
+                                }
+                            }
+                            catch
+                            {
+                                if (processList == process.ProcessName)
+                                {
+                                    systemRequired = true;
+                                }
+                            }
+                        }
 
-                }
-
-            }
+                    }*/
+                    
+          //      }
+         //   }
 
             F5KeyTrigger = false;
             RunDeleteOnce = false;
-            XXPrograms.Text = clbProcess.Items.Count.ToString() + " Programs";
+            XXPrograms.Text = clbProcess.Items.Count.ToString() + " Processes";
             // Should set to true once tab was activated
             if (tabControl1.SelectedIndex == 1)
             // Remove F5 key press trigger. Catch Key function did not work replacing to button click.
@@ -728,7 +1194,7 @@ namespace SleepFix
             }
             else
             {
-                if (DateTime.Now > ClearStopDelay)
+                if (DateTime.Now > ClearStopDelay && DateTime.Now > ClearStopDelay2)
                 {
                     SystemNotRequired("Process");
                 }
@@ -876,6 +1342,7 @@ namespace SleepFix
             SystemNotRequired("Upload");
             SystemNotRequired("Process");
             ClearStopDelay = DateTime.Now;
+            ClearStopDelay2 = DateTime.Now;
         }
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -886,6 +1353,7 @@ namespace SleepFix
             SystemNotRequired("Upload");
             SystemNotRequired("Process");
             ClearStopDelay = DateTime.Now;
+            ClearStopDelay2 = DateTime.Now;
         }
 
         private void groupBox8_Enter(object sender, EventArgs e)
@@ -901,7 +1369,7 @@ namespace SleepFix
         private void button6_Click(object sender, EventArgs e)
         {
             SystemRequired("Process");
-            ClearStopDelay = DateTime.Now.AddMinutes((int)numericUpDown5.Value);
+            ClearStopDelay2 = DateTime.Now.AddMinutes((int)numericUpDown5.Value);
         }
 
         private void button7_Click(object sender, EventArgs e)

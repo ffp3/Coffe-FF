@@ -27,6 +27,13 @@ You probably have x64 (64 bit) windows vista or windows 7, please visit the file
 Is there a portable version?
 You can install software and copy all files to usb.
 
+
+***** 2.0.3 ****** (Updated by FireFly) 
+Done: 
+ Added portable version to rar file.
+ Rewrote code and improved program list.
+ Fixed delay option.
+
 ***** 2.0.2 ****** (Updated by FireFly) 
 Done: 
  Fixed and improved program list.
