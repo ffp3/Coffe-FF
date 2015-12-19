@@ -3,6 +3,7 @@ C:\BRTV\Coffee\Coffe-FF\SleepFix\bin\Release\Coffee_FF.exe.manifest
 C:\BRTV\Coffee\Coffe-FF\SleepFix\bin\Release\Coffee_FF.application
 C:\BRTV\Coffee\Coffe-FF\SleepFix\bin\Release\Coffee_FF.exe
 C:\BRTV\Coffee\Coffe-FF\SleepFix\bin\Release\Coffee_FF.pdb
+C:\BRTV\Coffee\Coffe-FF\SleepFix\obj\x86\Release\Coffee.csprojResolveAssemblyReference.cache
 C:\BRTV\Coffee\Coffe-FF\SleepFix\obj\x86\Release\SleepFix.Form1.resources
 C:\BRTV\Coffee\Coffe-FF\SleepFix\obj\x86\Release\Coffee_FF.Properties.Resources.resources
 C:\BRTV\Coffee\Coffe-FF\SleepFix\obj\x86\Release\Coffee.csproj.GenerateResource.Cache

@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Milk.exe" size="210360">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Milk.exe" size="209408">
       <assemblyIdentity name="Milk" version="2.0.2.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>r/gBg27tPJKX2uqfKTmD64k+pJtILD11U1gj+ygQ7S0=</dsig:DigestValue>
+        <dsig:DigestValue>2893kRv1R6t6x/l1UXS0mMOWu1uYx8SB6ZqWlbY7/ZE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,15 +61,6 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>ObdmOnVvZxSKNWajZ8vqeBZp9+sMlgvh2zQ7UFkrBo4=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Milk.exe.config" size="161">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>+K0Xw31ERSGzkFzL116my249J2OxbrVrLhqkJ0Fz5hQ=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

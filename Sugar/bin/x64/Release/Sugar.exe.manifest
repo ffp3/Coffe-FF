@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Sugar.exe" size="209336">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Sugar.exe" size="208384">
       <assemblyIdentity name="Sugar" version="2.0.2.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>OjttG8p2rLJPV4DXw7MwzII3UYithr3tprrJXBu0X+U=</dsig:DigestValue>
+        <dsig:DigestValue>NdGC8vi+1YYxeTUjEUMmxd5RprL/+fkp4mniyaUkSFo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,15 +61,6 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>ObdmOnVvZxSKNWajZ8vqeBZp9+sMlgvh2zQ7UFkrBo4=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Sugar.exe.config" size="161">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>+K0Xw31ERSGzkFzL116my249J2OxbrVrLhqkJ0Fz5hQ=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

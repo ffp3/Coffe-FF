@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,10 +11,13 @@ using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Security.Principal;
+using System.Xml;
 
 using System.Threading;
 //for COM add-in
 using System.Reflection;
+
+
 
 
 
@@ -22,6 +26,7 @@ namespace SleepFix
         public partial class Form1 : Form
     {
 
+       // String strConnString = System.Configuration.ConfigurationManager.ConnectionStrings["myConnectionString"].ConnectionString;
 
         public Form1()
         {
@@ -57,6 +62,7 @@ namespace SleepFix
         bool menuexit = false;
         bool FileDenied = false;
         bool ProcessChecked = false;
+        string result;
 
         List<string> ListDeniedAcessFiles = new List<string>();
 
@@ -176,8 +182,8 @@ namespace SleepFix
         bool UploadPrevented = false;
         bool ProcessPrevented = false;
         bool FDuplicate = false;
-        String ListADD;
-        String ListDELETE;
+       // String ListADD;
+       // String ListDELETE;
         bool TabRefreshOnce;
         bool RunDeleteOnce = false;
         bool F5KeyTrigger = false;
@@ -527,7 +533,37 @@ namespace SleepFix
             }
             else
             {
+                // Portable
+                var appSettings = ConfigurationManager.AppSettings;
+                result = appSettings["NetworkAdaptor"];
 
+                if (!(string.IsNullOrEmpty(result)))
+                    comboBox1.SelectedIndex = comboBox1.Items.IndexOf(result);
+
+
+                if (comboBox1.SelectedIndex < 0)
+                {
+                    comboBox1.SelectedIndex = 0;
+                    MessageBox.Show("Error: " + result + " not found.");
+                }
+
+                result = appSettings["DownloadThreshold"];
+                numericUpDown1.Value = int.Parse(result);
+                result = appSettings["UploadThreshold"];
+                numericUpDown2.Value = int.Parse(result);
+                result = appSettings["DelayRemoveSleep"];
+                numericUpDown3.Value = int.Parse(result);
+                result = appSettings["PressKeyInMinutes"];
+                numericUpDown4.Value = int.Parse(result);
+                result = appSettings["EnDisKeyPress"];
+                checkBox1.Checked = Convert.ToBoolean(result);
+                result = appSettings["DisDisplayStandby"];
+                checkBox2.Checked = Convert.ToBoolean(result);
+                // End of Portable
+
+                /*
+                
+                // Normal version
                 if (!(string.IsNullOrEmpty(Coffee_FF.Properties.Settings.Default.NetworkAdaptor)))
                     comboBox1.SelectedIndex = comboBox1.Items.IndexOf(Coffee_FF.Properties.Settings.Default.NetworkAdaptor);
 
@@ -537,17 +573,22 @@ namespace SleepFix
                     comboBox1.SelectedIndex = 0;
                     MessageBox.Show("Error: " + Coffee_FF.Properties.Settings.Default.NetworkAdaptor + " not found.");
                 }
-
+                
                 numericUpDown1.Value = Coffee_FF.Properties.Settings.Default.DownloadThreshold;
                 numericUpDown2.Value = Coffee_FF.Properties.Settings.Default.UploadThreshold;
                 numericUpDown3.Value = Coffee_FF.Properties.Settings.Default.DelayRemoveSleep; // Delay before remove sleep blocker
                 numericUpDown4.Value = Coffee_FF.Properties.Settings.Default.PressKeyInMinutes; // Send virtual key press every X minutes
                 checkBox1.Checked = Coffee_FF.Properties.Settings.Default.EnDisKeyPress; // Sending virutal key press enabeld when checked
                 checkBox2.Checked = Coffee_FF.Properties.Settings.Default.DisDisplayStandby; // Keep Display Awake if checked
+                // END Normal version
+                
+                */ 
             }
 
     
         }
+
+   
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -1310,8 +1351,6 @@ namespace SleepFix
         private void button5_Click(object sender, EventArgs e)
         {
             SaveState();
-
-            Coffee_FF.Properties.Settings.Default.Save();
             Environment.Exit(0);
             // Application.Exit();
         }
@@ -1320,17 +1359,62 @@ namespace SleepFix
         {
             try
             {
-                Coffee_FF.Properties.Settings.Default.NetworkAdaptor = comboBox1.SelectedItem.ToString();// = comboBox1.Items.IndexOf();
-                Coffee_FF.Properties.Settings.Default.DownloadThreshold = (int)numericUpDown1.Value;
-                Coffee_FF.Properties.Settings.Default.UploadThreshold = (int)numericUpDown2.Value;
-                Coffee_FF.Properties.Settings.Default.DelayRemoveSleep = (int)numericUpDown3.Value;
-                Coffee_FF.Properties.Settings.Default.PressKeyInMinutes = (int)numericUpDown4.Value;  // Send virtual key press every X minutes
-                Coffee_FF.Properties.Settings.Default.EnDisKeyPress = checkBox1.Checked;
-                Coffee_FF.Properties.Settings.Default.DisDisplayStandby = checkBox2.Checked;
-                Coffee_FF.Properties.Settings.Default.Save();
+                // Try Save Settins for Portable
+
+  
+                // Regular user.config save
+                //Coffee_FF.Properties.Settings.Default.NetworkAdaptor = comboBox1.SelectedItem.ToString();// = comboBox1.Items.IndexOf();
+                //Coffee_FF.Properties.Settings.Default.DownloadThreshold = (int)numericUpDown1.Value;
+                //Coffee_FF.Properties.Settings.Default.UploadThreshold = (int)numericUpDown2.Value;
+                //Coffee_FF.Properties.Settings.Default.DelayRemoveSleep = (int)numericUpDown3.Value;
+                //Coffee_FF.Properties.Settings.Default.PressKeyInMinutes = (int)numericUpDown4.Value;  // Send virtual key press every X minutes
+                //Coffee_FF.Properties.Settings.Default.EnDisKeyPress = checkBox1.Checked;
+                //Coffee_FF.Properties.Settings.Default.DisDisplayStandby = checkBox2.Checked;
+                //Coffee_FF.Properties.Settings.Default.Save();
+                //Coffee_FF.Properties.Settings.Default.Save(ConfigurationSaveMode.Modified);
+                
+                // Portable
+                AddUpdateAppSettings("NetworkAdaptor", comboBox1.SelectedItem.ToString());// = comboBox1.Items.IndexOf();
+                AddUpdateAppSettings("DownloadThreshold", numericUpDown1.Value.ToString());
+                AddUpdateAppSettings("UploadThreshold", numericUpDown2.Value.ToString());
+                AddUpdateAppSettings("DelayRemoveSleep", numericUpDown3.Value.ToString());
+                AddUpdateAppSettings("PressKeyInMinutes", numericUpDown4.Value.ToString());  // Send virtual key press every X minutes
+                AddUpdateAppSettings("EnDisKeyPress", checkBox1.Checked.ToString());
+                AddUpdateAppSettings("DisDisplayStandby", checkBox2.Checked.ToString());
+
+
             }
             catch { }
         }
+
+
+
+
+        static void AddUpdateAppSettings(string key, string value)
+        {
+            try
+            {
+                var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                var settings = configFile.AppSettings.Settings;
+                if (settings[key] == null)
+                {
+                    settings.Add(key, value);
+                }
+                else
+                {
+                    settings[key].Value = value;
+                }
+                configFile.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
+            }
+            catch (ConfigurationErrorsException)
+            {
+                Console.WriteLine("Error writing app settings");
+            }
+        }
+
+
+
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {

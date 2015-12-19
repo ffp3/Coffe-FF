@@ -1,4 +1,3 @@
-C:\BRTV\Coffee\Coffe-FF\Milk\bin\x64\Release\Milk.exe.config
 C:\BRTV\Coffee\Coffe-FF\Milk\bin\x64\Release\Milk.exe.manifest
 C:\BRTV\Coffee\Coffe-FF\Milk\bin\x64\Release\Milk.application
 C:\BRTV\Coffee\Coffe-FF\Milk\bin\x64\Release\Milk.exe

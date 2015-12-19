@@ -7,14 +7,14 @@
     <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Sugar.exe.manifest" size="3926">
+    <dependentAssembly dependencyType="install" codebase="Sugar.exe.manifest" size="3533">
       <assemblyIdentity name="Sugar.exe" version="2.0.2.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>e9bTTMBUazDbkpKJ/mxrpFm7X03pELDEKsr+qHD9N2s=</dsig:DigestValue>
+        <dsig:DigestValue>qXntsISC/Pnz/n7UEb7W/Nd9+ITYIfVfMaBPYcsSezI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

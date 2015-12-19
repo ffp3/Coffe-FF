@@ -1,4 +1,3 @@
-C:\BRTV\Coffee\Coffe-FF\Sugar\bin\Release\Sugar.exe.config
 C:\BRTV\Coffee\Coffe-FF\Sugar\bin\Release\Sugar.exe.manifest
 C:\BRTV\Coffee\Coffe-FF\Sugar\bin\Release\Sugar.application
 C:\BRTV\Coffee\Coffe-FF\Sugar\bin\Release\Sugar.exe

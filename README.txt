@@ -27,6 +27,9 @@ You probably have x64 (64 bit) windows vista or windows 7, please visit the file
 Is there a portable version?
 You can install software and copy all files to usb.
 
+***** 2.0.3(2) ****** (Updated by FireFly) 
+Done:
+ Fixed portable version.
 
 ***** 2.0.3 ****** (Updated by FireFly) 
 Done: 
